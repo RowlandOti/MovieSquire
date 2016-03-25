@@ -1,3 +1,6 @@
+### Status
+[![Build Status](https://travis-ci.com/RowlandOti/MovieSquire.svg?branch=master)](https://travis-ci.org/RowlandOti/MovieSquire)
+
 # PopularMovies
 An app to browse the most popular and highest rated movies listed in IMDB.com
 It shows the android principles that I learnt from the Udacity Android Nanodegree Course.
