@@ -24,6 +24,6 @@
     android:layout_gravity="bottom|end"
     android:layout_margin="@dimen/fab_margin"
     android:clickable="true"
-    app:layout_behavior="com.rowland.movies.ui.behaviours.ScrollAwareFloatingActionButtonBehavior" />
+    app:layout_behavior="com.rowland.moviesquire.ui.behaviours.ScrollAwareFloatingActionButtonBehavior" />
 
 

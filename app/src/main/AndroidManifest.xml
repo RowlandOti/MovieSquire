@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rowland.movies">
+    package="com.rowland.moviesquire">
 
     <!-- ANDROID PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.rowland.movies.ApplicationController"
+        android:name="com.rowland.moviesquire.ApplicationController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.Dark">
         <service
-            android:name=".rest.services.MovieIntentService"
+            android:name="com.rowland.moviesquire.rest.services.MovieIntentService"
             android:exported="false" />
         <service
-            android:name=".rest.services.ReviewIntentService"
+            android:name="com.rowland.moviesquire.rest.services.ReviewIntentService"
             android:exported="false" />
         <service
-            android:name=".rest.services.TrailerIntentService"
+            android:name="com.rowland.moviesquire.rest.services.TrailerIntentService"
             android:exported="false" />
 
         <meta-data
@@ -33,7 +33,7 @@
             android:value="com.rowland.movies.rest.models.Movie, com.rowland.movies.rest.models.Review, com.rowland.movies.rest.models.Trailer" />
 
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="com.rowland.moviesquire.ui.activities.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name">
             <intent-filter>
@@ -43,10 +43,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.SearchActivity"
+            android:name="com.rowland.moviesquire.ui.activities.SearchActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_search"
-            android:parentActivityName=".ui.activities.MainActivity">
+            android:parentActivityName="com.rowland.moviesquire.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -56,16 +56,16 @@
                 android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rowland.movies.ui.activities.MainActivity" />
+                android:value="com.rowland.moviesquire.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.DetailActivity"
+            android:name="com.rowland.moviesquire.ui.activities.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".ui.activities.MainActivity"
+            android:parentActivityName="com.rowland.moviesquire.ui.activities.MainActivity"
             android:theme="@style/AppTheme.Dark">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rowland.movies.ui.activities.MainActivity" />
+                android:value="com.rowland.moviesquire.ui.activities.MainActivity" />
         </activity>
     </application>
 
