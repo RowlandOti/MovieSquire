@@ -7,8 +7,10 @@ It shows the android principles that I learnt from the Udacity Android Nanodegre
 
 Preview: 
 
-![Alt text](https://github.com/RowlandOti/MovieSquire/blob/master/art/framed/marketing/Hero-Image_Nexus.jpg?raw=true "MovieSquire Preview")
+![Alt text](https://github.com/RowlandOti/MovieSquire/blob/master/documentation/art/framed/marketing/Hero-Image_Nexus.jpg?raw=true "MovieSquire Preview")
 
 
-![Alt text](https://github.com/RowlandOti/MovieSquire/blob/master/art/gif/marketing/hashtrace.gif?raw=true "MovieSquire Preview")
+
+
+![Alt text](https://github.com/RowlandOti/MovieSquire/blob/master/documentation/art/framed/marketing/Hero-Image_Nexus.jpg?raw=true "MovieSquire Preview")
 
