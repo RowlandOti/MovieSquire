@@ -1,5 +1,5 @@
 ### Status
-[![Build Status](https://travis-ci.com/RowlandOti/MovieSquire.svg?branch=master)](https://travis-ci.org/RowlandOti/MovieSquire)
+[![Build Status](https://travis-ci.org/RowlandOti/MovieSquire.svg?branch=master)](https://travis-ci.org/RowlandOti/MovieSquire)
 
 # MovieSquire
 An app to browse the most popular and highest rated movies listed in IMDB.com
