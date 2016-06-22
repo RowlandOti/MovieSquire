@@ -11,6 +11,5 @@ Preview:
 
 
 
-
 ![Alt text](https://github.com/RowlandOti/MovieSquire/blob/master/documentation/art/gif/marketing/squire.gif?raw=true "MovieSquire Preview")
 
