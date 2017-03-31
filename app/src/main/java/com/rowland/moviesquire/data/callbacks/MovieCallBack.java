@@ -47,6 +47,12 @@ public class MovieCallBack implements Callback<MovieCollection> {
     public MovieCallBack(Context context, ESortOrder sortOrder) {
         this.context = context;
         this.mSortOrder = sortOrder;
+
+        // Check whether we are in debugging mode;
+        if (BuildConfig.IS_DEBUG_MODE) {
+            // we got an error message - Do error handling here
+            Log.d(LOG_TAG, "MovieCallBack()");
+        }
     }
 
     @Override
@@ -59,6 +65,7 @@ public class MovieCallBack implements Callback<MovieCollection> {
             MovieRepository mMovieRepository = new MovieRepository();
             // Save movies to data storage
             mMovieRepository.saveAll(reviewCollection, mSortOrder);
+
             // BroadCast the changes locally
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(MovieLoader.INTENT_ACTION));
         } else {
@@ -73,6 +80,6 @@ public class MovieCallBack implements Callback<MovieCollection> {
     @Override
     public void onFailure(Throwable t) {
         // Inform user of failure due to no network e.t.c
-        //Log.d(LOG_TAG, t.getMessage());
+        Log.d(LOG_TAG, t.getMessage());
     }
 }

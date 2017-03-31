@@ -67,7 +67,7 @@ public class MainActivity extends BaseToolBarActivity implements MainFragment.IM
             if (savedInstanceState != null) {
                 // Recover assets
                 mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION_KEY);
-                mMovieId = savedInstanceState.getInt(SELECTED_MOVIE_KEY);
+                mMovieId = savedInstanceState.getLong(SELECTED_MOVIE_KEY);
                 // Set positions as selected
                 onMovieSelected(mMovieId, mSelectedPosition);
                 return;

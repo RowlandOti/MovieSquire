@@ -36,6 +36,8 @@ import com.rowland.moviesquire.rest.services.IRetrofitAPI;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
+import java.lang.reflect.Modifier;
+
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -70,8 +72,11 @@ public class ApplicationController extends Application {
     public static Retrofit getRetrofit() {
         // Set custom date format for Gson
         Gson gson = new GsonBuilder()
+                .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                .excludeFieldsWithoutExposeAnnotation()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
+
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         SessionRequestInterceptor sessionRequestInterceptor = new SessionRequestInterceptor();
         // set your desired log level

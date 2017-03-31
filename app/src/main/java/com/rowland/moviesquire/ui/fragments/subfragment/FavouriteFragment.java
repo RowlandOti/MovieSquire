@@ -24,7 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.query.Select;
 import com.rowland.moviesquire.R;
+import com.rowland.moviesquire.data.loaders.ModelLoader;
 import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
@@ -41,6 +43,8 @@ public class FavouriteFragment extends BaseMovieFragment implements LoaderManage
 
     // Logging tracker for this class
     private final String LOG_TAG = FavouriteFragment.class.getSimpleName();
+
+    private static final int FAV_MOVIES_LOADER_ID = 1;
 
     // Default constructor
     public FavouriteFragment() {
@@ -87,13 +91,18 @@ public class FavouriteFragment extends BaseMovieFragment implements LoaderManage
             isLaunch = false;
         }
         // Initialize the Loader
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(FAV_MOVIES_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         // Create new loader
-        MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        //MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        // Return new loader
+        //return movieLoader;
+
+        // Create new loader
+        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class), true);
         // Return new loader
         return movieLoader;
     }
@@ -122,7 +131,7 @@ public class FavouriteFragment extends BaseMovieFragment implements LoaderManage
     @Override
     public void onRefresh() {
         // Refresh the Loader
-        getLoaderManager().restartLoader(0, null, this);
+        getLoaderManager().restartLoader(FAV_MOVIES_LOADER_ID, null, this);
         // Set refreshing to false
         mSwRefreshLayout.setRefreshing(false);
     }

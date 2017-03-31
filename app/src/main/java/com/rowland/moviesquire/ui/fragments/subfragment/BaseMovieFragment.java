@@ -17,6 +17,7 @@
 
 package com.rowland.moviesquire.ui.fragments.subfragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -34,6 +37,7 @@ import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.rest.services.MovieIntentService;
 import com.rowland.moviesquire.ui.adapters.MovieAdapter;
+import com.rowland.moviesquire.ui.widgets.EndlessRecyclerViewScrollListener;
 import com.rowland.moviesquire.utilities.ScreenUtility;
 import com.rowland.moviesquire.utilities.Utilities;
 
@@ -59,6 +63,8 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
     protected boolean isLaunch = true;
     // Page no. of request
     protected int mRequestPageNo = 1;
+    // The scroll listener to load more
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     // ButterKnife injected Views
     @Bind(R.id.sw_refresh_layout)
@@ -98,7 +104,7 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         mSwRefreshLayout.setColorSchemeResources(R.color.apptheme_accent_teal);
         mSwRefreshLayout.setProgressViewOffset(true, 100, 400);
         // Create new instance of layout manager
-        final StaggeredGridLayoutManager mStaggeredLayoutManger = new StaggeredGridLayoutManager(getNumberOfColumns(), StaggeredGridLayoutManager.VERTICAL);
+        final StaggeredGridLayoutManager mStaggeredLayoutManger = new StaggeredGridLayoutManager(calculateNoOfColumns(getActivity()), StaggeredGridLayoutManager.VERTICAL);
         // Set the layout manger
         mMovieRecycleView.setLayoutManager(mStaggeredLayoutManger);
         mMovieRecycleView.setHasFixedSize(false);
@@ -108,6 +114,16 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         mMovieAdapter = new MovieAdapter(mMovieList, getContext(), getActivity());
         // Associate RecycleView with adapter
         mMovieRecycleView.setAdapter(mMovieAdapter);
+        // Set onScrollListener
+        scrollListener = new EndlessRecyclerViewScrollListener(mStaggeredLayoutManger) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Load next page of movies
+                loadMoviesData(page);
+            }
+        };
+        // Associate RecyclerView with the EndlessRecyclerViewScrollListener
+        mMovieRecycleView.addOnScrollListener(scrollListener);
         // Set the refreshlayout's listener
         mSwRefreshLayout.setOnRefreshListener(this);
     }
@@ -143,16 +159,10 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         outState.putBoolean("IS_LAUNCH", isLaunch);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
     // Start the service
     protected void startMovieIntentService() {
         // Don't query internet for locally favoured movies
-        if(mSortOrder != ESortOrder.FAVOURITE_DESCENDING) {
+        if (mSortOrder != ESortOrder.FAVOURITE_DESCENDING) {
             Intent i = new Intent(getActivity(), MovieIntentService.class);
             i.putExtra(MovieIntentService.REQUEST_SORT_TYPE_STRING, mSortOrder.getSortOrder());
             i.putExtra(MovieIntentService.REQUEST_PAGE_NO_INT, mRequestPageNo);
@@ -162,16 +172,27 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    // Get the no. of grid columns to use
-    protected int getNumberOfColumns() {
-        // The number of grid columns
-        int numberColumns = 2;
-        // Check if we are in landscape
-        if (ScreenUtility.isInLandscapeOrientation(getContext())) {
-            numberColumns = 3;
+    protected void loadMoviesData(int requestPageNo) {
+        // Don't query internet for locally favoured movies
+        if (mSortOrder != ESortOrder.FAVOURITE_DESCENDING) {
+            Intent i = new Intent(getActivity(), MovieIntentService.class);
+            i.putExtra(MovieIntentService.REQUEST_SORT_TYPE_STRING, mSortOrder.getSortOrder());
+            i.putExtra(MovieIntentService.REQUEST_PAGE_NO_INT, mRequestPageNo);
+            getActivity().startService(i);
+            // Increment requestPage no.
+            mRequestPageNo++;
         }
+    }
+
+    public static int calculateNoOfColumns(Context context) {
+        //
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int scalingFactor = 180;
+        // Calculate no. of columns based on scalling factor
+        int noOfColumns = (int) (dpWidth / scalingFactor);
         // Return the no. of columns
-        return numberColumns;
+        return noOfColumns;
     }
 
     // Update the empty view
@@ -180,6 +201,7 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
             // Show Empty TextView
             mMovieRecycleView.setVisibility(View.GONE);
             mEmptyTextViewContainer.setVisibility(View.VISIBLE);
+            Log.d(BaseMovieFragment.class.getSimpleName(), "Adapter Count: " + mMovieAdapter.getItemCount());
         } else {
             // Show RecycleView filled with movies
             mMovieRecycleView.setVisibility(View.VISIBLE);

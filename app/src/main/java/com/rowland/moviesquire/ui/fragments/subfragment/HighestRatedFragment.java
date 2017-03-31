@@ -24,7 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.query.Select;
 import com.rowland.moviesquire.R;
+import com.rowland.moviesquire.data.loaders.ModelLoader;
 import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
@@ -41,6 +43,8 @@ public class HighestRatedFragment extends BaseMovieFragment implements LoaderMan
 
     // Logging tracker for this class
     private final String LOG_TAG = HighestRatedFragment.class.getSimpleName();
+
+    private static final int HIGH_MOVIES_LOADER_ID = 2;
 
     // Default constructor
     public HighestRatedFragment() {
@@ -88,13 +92,18 @@ public class HighestRatedFragment extends BaseMovieFragment implements LoaderMan
             isLaunch = false;
         }
         // Initialize the Loader
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(HIGH_MOVIES_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         // Create new loader
-        MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        //MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        // Return new loader
+        //return movieLoader;
+
+        // Create new loader
+        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class), true);
         // Return new loader
         return movieLoader;
     }

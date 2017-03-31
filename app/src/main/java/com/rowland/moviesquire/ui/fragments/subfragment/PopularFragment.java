@@ -20,11 +20,14 @@ package com.rowland.moviesquire.ui.fragments.subfragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.query.Select;
 import com.rowland.moviesquire.R;
+import com.rowland.moviesquire.data.loaders.ModelLoader;
 import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
@@ -39,8 +42,11 @@ import butterknife.ButterKnife;
  */
 public class PopularFragment extends BaseMovieFragment implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
+
     // Logging tracker for this class
     private final String LOG_TAG = PopularFragment.class.getSimpleName();
+
+    private static final int POP_MOVIES_LOADER_ID = 0;
 
     // Default constructor
     public PopularFragment() {
@@ -88,13 +94,30 @@ public class PopularFragment extends BaseMovieFragment implements LoaderManager.
             isLaunch = false;
         }
         // Initialize the Loader
-        getLoaderManager().initLoader(0, null, this);
+        //getLoaderManager().initLoader(0, null, this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        LoaderManager manager = getActivity().getSupportLoaderManager();
+        if (manager.getLoader(POP_MOVIES_LOADER_ID) == null) {
+            // Initialize the Loader
+            manager.initLoader(POP_MOVIES_LOADER_ID, null, this);
+        } else {
+            // Restart the Loader
+            manager.restartLoader(POP_MOVIES_LOADER_ID, null, this);
+        }
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         // Create new loader
-        MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        //MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
+        // Return new loader
+        //return movieLoader;
+
+        // Create new loader
+        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class), true);
         // Return new loader
         return movieLoader;
     }
@@ -107,6 +130,7 @@ public class PopularFragment extends BaseMovieFragment implements LoaderManager.
         mMovieList = movieList;
         // Pass it on to our adapter
         mMovieAdapter.addAll(movieList);
+        Log.d(LOG_TAG, mMovieList.toString());
         // Update the Empty View
         updateEmptyView();
     }
