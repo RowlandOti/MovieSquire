@@ -16,14 +16,39 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_mediumAnimTime">
+
+    <!-- State when a row is being pressed, but hasn't yet been activated (finger down) -->
     <!-- Pressed and Focused -->
-    <item android:drawable="@color/apptheme_accent_teal" android:state_enabled="false" android:state_focused="true" android:state_pressed="true" />
-    <!-- Focused -->
-    <item android:drawable="@color/apptheme_accent_teal" android:state_enabled="false" android:state_focused="true" />
-    <!-- Pressed -->
-    <item android:drawable="@color/apptheme_accent_teal" android:state_focused="false" android:state_pressed="true" />
-    <!-- Selected -->
-    <item android:drawable="@color/apptheme_accent_teal" android:state_selected="true" />
+    <item android:state_enabled="false" android:state_focused="true" android:state_pressed="true">
+        <shape>
+            <solid android:color="@android:color/transparent"/>
+            <stroke
+                android:color="@color/apptheme_accent_teal"
+                android:width="@dimen/touch_selector_stroke_width"/>
+            <padding
+                android:top="@dimen/touch_selector_padding"
+                android:right="@dimen/touch_selector_padding"
+                android:left="@dimen/touch_selector_padding"
+                android:bottom="@dimen/touch_selector_padding"/>
+        </shape>
+    </item>
+
+    <!-- When the view is "activated".  In SINGLE_CHOICE_MODE, it flags the active row
+         of a ListView -->
+    <item android:state_activated="true">
+        <shape>
+            <solid android:color="@android:color/transparent"/>
+            <stroke
+                android:color="@color/apptheme_accent_teal"
+                android:width="@dimen/touch_selector_stroke_width"/>
+            <padding
+                android:top="@dimen/touch_selector_padding"
+                android:right="@dimen/touch_selector_padding"
+                android:left="@dimen/touch_selector_padding"
+                android:bottom="@dimen/touch_selector_padding"/>
+        </shape>
+    </item>
+
     <!-- Default -->
-    <item android:drawable="@color/apptheme_background_window_grey" />
+    <item android:drawable="@android:color/transparent" />
 </selector>

@@ -6,4 +6,6 @@
     <dimen name="config_prefListPopupWindowWidth">150dp</dimen>
     <dimen name="empty_text_viewPadding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="touch_selector_stroke_width">4dp</dimen>
+    <dimen name="touch_selector_padding">4dp</dimen>
 </resources>

@@ -118,6 +118,7 @@ public class DetailFragment extends Fragment {
     RecyclerView mTrailerRecycleView;
     @Bind(R.id.review_recycle_view)
     RecyclerView mReviewRecycleView;
+
     // The Movie model
     private Movie mMovie;
     // The model key
