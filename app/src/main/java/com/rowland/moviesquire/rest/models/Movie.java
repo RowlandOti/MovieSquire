@@ -39,6 +39,7 @@ public class Movie extends Model implements Serializable {
     private static final String LOG_TAG = Movie.class.getSimpleName();
     // Gson annotations
     @SerializedName("release_date")
+    @Expose
     //ActiveAndroid Annotations
     @Column(name = "release_date")
     public Date releaseDate;

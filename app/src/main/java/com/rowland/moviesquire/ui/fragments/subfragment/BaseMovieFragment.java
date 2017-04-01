@@ -25,6 +25,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
@@ -74,6 +75,7 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
     @Bind(R.id.empty_text_view_container)
     protected LinearLayout mEmptyTextViewContainer;
 
+
     // Default constructor
     public BaseMovieFragment() {
 
@@ -104,10 +106,11 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         mSwRefreshLayout.setColorSchemeResources(R.color.apptheme_accent_teal);
         mSwRefreshLayout.setProgressViewOffset(true, 100, 400);
         // Create new instance of layout manager
-        final StaggeredGridLayoutManager mStaggeredLayoutManger = new StaggeredGridLayoutManager(calculateNoOfColumns(getActivity()), StaggeredGridLayoutManager.VERTICAL);
+        final StaggeredGridLayoutManager mLayoutManger = new StaggeredGridLayoutManager(calculateNoOfColumns(getActivity()), StaggeredGridLayoutManager.VERTICAL);
+        //final GridLayoutManager mLayoutManger = new GridLayoutManager(getActivity(), calculateNoOfColumns(getActivity()));
         // Set the layout manger
-        mMovieRecycleView.setLayoutManager(mStaggeredLayoutManger);
-        mMovieRecycleView.setHasFixedSize(false);
+        mMovieRecycleView.setLayoutManager(mLayoutManger);
+        //mMovieRecycleView.setHasFixedSize(false);
         // Call is actually only necessary with custom ItemAnimators
         mMovieRecycleView.setItemAnimator(new DefaultItemAnimator());
         // Create new adapter
@@ -115,11 +118,13 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         // Associate RecycleView with adapter
         mMovieRecycleView.setAdapter(mMovieAdapter);
         // Set onScrollListener
-        scrollListener = new EndlessRecyclerViewScrollListener(mStaggeredLayoutManger) {
+        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManger) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Load next page of movies
                 loadMoviesData(page);
+                // Save currently loaded page
+                mRequestPageNo = page;
             }
         };
         // Associate RecyclerView with the EndlessRecyclerViewScrollListener
@@ -188,7 +193,7 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         //
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int scalingFactor = 180;
+        int scalingFactor = 160;
         // Calculate no. of columns based on scalling factor
         int noOfColumns = (int) (dpWidth / scalingFactor);
         // Return the no. of columns

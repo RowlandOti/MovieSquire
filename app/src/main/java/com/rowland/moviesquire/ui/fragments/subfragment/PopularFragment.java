@@ -41,8 +41,7 @@ import butterknife.ButterKnife;
  * Display Popular Movie
  */
 public class PopularFragment extends BaseMovieFragment implements LoaderManager.LoaderCallbacks<List<Movie>> {
-
-
+    
     // Logging tracker for this class
     private final String LOG_TAG = PopularFragment.class.getSimpleName();
 
@@ -93,12 +92,7 @@ public class PopularFragment extends BaseMovieFragment implements LoaderManager.
             startMovieIntentService();
             isLaunch = false;
         }
-        // Initialize the Loader
-        //getLoaderManager().initLoader(0, null, this);
-    }
-
-    public void onResume() {
-        super.onResume();
+        //
         LoaderManager manager = getActivity().getSupportLoaderManager();
         if (manager.getLoader(POP_MOVIES_LOADER_ID) == null) {
             // Initialize the Loader

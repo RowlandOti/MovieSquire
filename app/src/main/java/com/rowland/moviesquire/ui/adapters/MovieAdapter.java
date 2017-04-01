@@ -17,8 +17,14 @@
 
 package com.rowland.moviesquire.ui.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +33,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rowland.moviesquire.BuildConfig;
@@ -39,6 +47,7 @@ import com.rowland.moviesquire.ui.activities.MainActivity;
 import com.rowland.moviesquire.utilities.Utilities;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.Calendar;
 import java.util.List;
@@ -130,14 +139,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     // Takes care of the overhead of recycling and gives better performance and scrolling
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.grid_type_text_view)
-        TextView mSortTypeValueTextView;
-
         @Bind(R.id.grid_release_date_text_view)
         TextView mReleaseDateTextView;
-
-        @Bind(R.id.grid_title_text_view)
-        TextView mTitleTextView;
 
         @Bind(R.id.poster_image_view)
         ImageView mMovieImageView;
@@ -147,6 +150,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
 
         @Bind(R.id.container_item)
         FrameLayout mGridItemContainer;
+
+        @Bind(R.id.grid_container_content)
+        LinearLayout mGridContainerContent;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -165,33 +171,60 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
                     }
                 }
             });
-            // Set movie title
-            mTitleTextView.setText(movie.getOriginalTitle());
             // Set the release date
             if (movie.getReleaseDate() != null) {
                 mCalendar.setTime(movie.getReleaseDate());
                 mReleaseDateTextView.setText(String.valueOf(mCalendar.get(Calendar.YEAR)));
                 mReleaseDateTextView.setContentDescription(mReleaseDateTextView.getContext().getString(R.string.movie_year, String.valueOf(mCalendar.get(Calendar.YEAR))));
             }
-            // Set the popularity
-            if (movie.getIsPopular()) {
-                mSortTypeIconImageView.setImageResource(R.drawable.ic_popular_black_48dp);
-                mSortTypeValueTextView.setText(String.format("%d Votes", Math.round(movie.getPopularity())));
-            }
-            // Set highest rated
-            if (movie.getIsHighestRated()) {
-                mSortTypeIconImageView.setImageResource(R.drawable.ic_rated_black_48dp);
-                mSortTypeValueTextView.setText(String.format("%d/10", Math.round(movie.getVoteAverage())));
-            }
 
             // Build the image url
             String imageUrl = EBaseURlTypes.MOVIE_API_IMAGE_BASE_URL.getUrlType() + EBaseImageSize.IMAGE_SIZE_W154.getImageSize() + movie.getPosterPath();
+            Target target = new Target() {
+
+                ProgressBar mProgressDialog = new ProgressBar(mMovieImageView.getContext());
+
+
+
+                @Override
+                public void onPrepareLoad(Drawable arg0) {
+                    // Show some progress
+                }
+
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
+                    // Set background
+                    mMovieImageView.setImageBitmap(bitmap);
+                    Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+                        public void onGenerated(Palette palette) {
+                            // access palette colors here
+                            int defaultColor = 0x000000;
+                            int mutedLight = palette.getDarkMutedColor(defaultColor);
+                            mGridContainerContent.setBackgroundColor(mutedLight);
+                            // Hide some progress
+
+                        }
+                    };
+
+                    if (bitmap != null && !bitmap.isRecycled()) {
+                        Palette.from(bitmap).generate(paletteListener);
+                    }
+
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable arg0) {
+                    // Something went wrong
+                }
+            };
             // Use Picasso to load the images
             Picasso.with(mMovieImageView.getContext())
                     .load(imageUrl)
                     .networkPolicy(Utilities.NetworkUtility.isNetworkAvailable(mContext) ? NetworkPolicy.NO_CACHE : NetworkPolicy.OFFLINE)
                     .placeholder(R.drawable.ic_movie_placeholder)
-                    .into(mMovieImageView);
+                    .into(target);
+
+
         }
     }
 }
