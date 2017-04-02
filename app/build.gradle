@@ -67,7 +67,7 @@ dependencies {
     // TEST BINARY DEPENDENCIES
     testCompile 'junit:junit:4.12'
     // MODULE DEPENDENCY
-    compile project(':libraries:design')
+    //compile project(':libraries:design')
     // REMOTE BINARY DEPENDENCY - Android
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
@@ -93,4 +93,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     // Use - RecycleView Animation support
     compile 'jp.wasabeef:recyclerview-animators:1.3.0'
+    // Use - SlidingTabstripLayout for Tabs
+    compile 'com.rowland.slidingtabstriplayout:slidingTabStripLayout:1.0.0-beta-1'
 }

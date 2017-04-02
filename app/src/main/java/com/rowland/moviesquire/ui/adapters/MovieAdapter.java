@@ -17,12 +17,9 @@
 
 package com.rowland.moviesquire.ui.adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.util.SortedList;
@@ -62,8 +59,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
 
     // The class Log identifier
     private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
-    // A list of the movie items
-    private SortedList<Movie> mMovieList;
+    // A sorted list of the movie items
+    private SortedList<Movie> mMovieSortedList;
+    // Unsorted List
+    private List<Movie> mMovieList;
     // A Calendar object to help in formatting time
     private Calendar mCalendar;
     // Context instance
@@ -95,7 +94,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         // Acquire Movie item at this position
-        final Movie movie = mMovieList.get(position);
+        final Movie movie = mMovieSortedList.get(position);
         // Bind the data to the view holder
         holder.bindTo(movie, position);
     }
@@ -104,12 +103,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     @Override
     public int getItemCount() {
         // Check size of List first
-        if (mMovieList != null) {
+        if (mMovieSortedList != null) {
             // Check wether we are in debug mode
             if (BuildConfig.IS_DEBUG_MODE) {
-                Log.d(LOG_TAG, "List Count: " + mMovieList.size());
+                Log.d(LOG_TAG, "List Count: " + mMovieSortedList.size());
             }
-            return mMovieList.size();
+            return mMovieSortedList.size();
         }
         return 0;
     }
@@ -118,20 +117,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     public void addAll(List<Movie> movieList) {
 
         if (movieList != null) {
+            // Save unsorted List
+            mMovieList = movieList;
             // Check for null
-            if (mMovieList == null) {
+            if (mMovieSortedList == null) {
                 // Create a new instance
-                mMovieList = new SortedList<>(Movie.class, new MovieSortedListAdapterCallBack(this));
+                mMovieSortedList = new SortedList<>(Movie.class, new MovieSortedListAdapterCallBack(this));
             }
             // Begin
-            mMovieList.beginBatchedUpdates();
-            // Add each movie to the sorted list
-            for (Movie movie : movieList) {
-                // Add movies
-                mMovieList.add(movie);
-            }
+            mMovieSortedList.beginBatchedUpdates();
+            // Add movies
+            mMovieSortedList.addAll(movieList);
             // End
-            mMovieList.endBatchedUpdates();
+            mMovieSortedList.endBatchedUpdates();
             // Auto select the first item
         }
     }
@@ -140,7 +138,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.grid_release_date_text_view)
-        TextView mReleaseDateTextView;
+        TextView mMovieReleaseDateTextView;
+
+        @Bind(R.id.grid_rating)
+        TextView mMovieRating;
 
         @Bind(R.id.poster_image_view)
         ImageView mMovieImageView;
@@ -171,20 +172,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
                     }
                 }
             });
+            // Set the rating
+            mMovieRating.setText(String.format("%d/10", Math.round(movie.getVoteAverage())));
             // Set the release date
             if (movie.getReleaseDate() != null) {
                 mCalendar.setTime(movie.getReleaseDate());
-                mReleaseDateTextView.setText(String.valueOf(mCalendar.get(Calendar.YEAR)));
-                mReleaseDateTextView.setContentDescription(mReleaseDateTextView.getContext().getString(R.string.movie_year, String.valueOf(mCalendar.get(Calendar.YEAR))));
+                mMovieReleaseDateTextView.setText(String.valueOf(mCalendar.get(Calendar.YEAR)));
+                mMovieReleaseDateTextView.setContentDescription(mMovieReleaseDateTextView.getContext().getString(R.string.movie_year, String.valueOf(mCalendar.get(Calendar.YEAR))));
             }
 
             // Build the image url
             String imageUrl = EBaseURlTypes.MOVIE_API_IMAGE_BASE_URL.getUrlType() + EBaseImageSize.IMAGE_SIZE_W154.getImageSize() + movie.getPosterPath();
+
             Target target = new Target() {
-
-                ProgressBar mProgressDialog = new ProgressBar(mMovieImageView.getContext());
-
-
 
                 @Override
                 public void onPrepareLoad(Drawable arg0) {
@@ -195,14 +195,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
                     // Set background
                     mMovieImageView.setImageBitmap(bitmap);
-                    Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
+                    final Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
                         public void onGenerated(Palette palette) {
                             // access palette colors here
-                            int defaultColor = 0x000000;
-                            int mutedLight = palette.getDarkMutedColor(defaultColor);
-                            mGridContainerContent.setBackgroundColor(mutedLight);
+                            int defaultColor = 0xc5000000;
+                            int mutedLightColor = palette.getDarkMutedColor(defaultColor);
+                            mGridContainerContent.setBackgroundColor(mutedLightColor);
+                            // Get the "vibrant" color swatch based on the bitmap
+                            Palette.Swatch vibrantSwatch = palette.getDarkMutedSwatch();
+                            if (vibrantSwatch != null) {
+                                int textColor = vibrantSwatch.getBodyTextColor();
+                                mMovieReleaseDateTextView.setTextColor(textColor);
+                                mMovieRating.setTextColor(textColor);
+                            }
                             // Hide some progress
-
                         }
                     };
 

@@ -91,18 +91,13 @@ public class FavouriteFragment extends BaseMovieFragment implements LoaderManage
             isLaunch = false;
         }
         // Initialize the Loader
-        getLoaderManager().initLoader(FAV_MOVIES_LOADER_ID, null, this);
+        getActivity().getSupportLoaderManager().initLoader(FAV_MOVIES_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         // Create new loader
-        //MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
-        // Return new loader
-        //return movieLoader;
-
-        // Create new loader
-        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class), true);
+        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class).where("isFavourite = ?", true), true);
         // Return new loader
         return movieLoader;
     }

@@ -19,7 +19,7 @@
 
     <!-- State when a row is being pressed, but hasn't yet been activated (finger down) -->
     <!-- Pressed and Focused -->
-    <item android:state_enabled="false" android:state_focused="true" android:state_pressed="true">
+    <item android:state_pressed="true">
         <shape>
             <solid android:color="@android:color/transparent"/>
             <stroke
@@ -35,7 +35,7 @@
 
     <!-- When the view is "activated".  In SINGLE_CHOICE_MODE, it flags the active row
          of a ListView -->
-    <item android:state_activated="true">
+    <item android:state_activated="true" >
         <shape>
             <solid android:color="@android:color/transparent"/>
             <stroke

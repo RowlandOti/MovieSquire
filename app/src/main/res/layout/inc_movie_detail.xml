@@ -34,7 +34,7 @@
             android:id="@+id/movie_title_container"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/apptheme_accent_red">
+            tools:color="@color/apptheme_accent_red">
 
             <TextView
                 android:id="@+id/movie_title_text_view"
@@ -48,7 +48,6 @@
                 android:textIsSelectable="true"
                 android:textSize="16sp"
                 tools:text="Movie Title" />
-
 
         </RelativeLayout>
 

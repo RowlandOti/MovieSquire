@@ -37,6 +37,9 @@ import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.rest.services.MovieIntentService;
+import com.rowland.moviesquire.ui.activities.BaseToolBarActivity;
+import com.rowland.moviesquire.ui.activities.DetailActivity;
+import com.rowland.moviesquire.ui.activities.MainActivity;
 import com.rowland.moviesquire.ui.adapters.MovieAdapter;
 import com.rowland.moviesquire.ui.widgets.EndlessRecyclerViewScrollListener;
 import com.rowland.moviesquire.utilities.ScreenUtility;
@@ -105,9 +108,10 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
         // Configure the refresh layout look
         mSwRefreshLayout.setColorSchemeResources(R.color.apptheme_accent_teal);
         mSwRefreshLayout.setProgressViewOffset(true, 100, 400);
+        // Calculate no. of columns
+        int numberOfColumns = ((BaseToolBarActivity) getActivity()).calculateNoOfColumns(getActivity());
         // Create new instance of layout manager
-        final StaggeredGridLayoutManager mLayoutManger = new StaggeredGridLayoutManager(calculateNoOfColumns(getActivity()), StaggeredGridLayoutManager.VERTICAL);
-        //final GridLayoutManager mLayoutManger = new GridLayoutManager(getActivity(), calculateNoOfColumns(getActivity()));
+        final StaggeredGridLayoutManager mLayoutManger = new StaggeredGridLayoutManager(numberOfColumns, StaggeredGridLayoutManager.VERTICAL);
         // Set the layout manger
         mMovieRecycleView.setLayoutManager(mLayoutManger);
         //mMovieRecycleView.setHasFixedSize(false);
@@ -187,17 +191,6 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
             // Increment requestPage no.
             mRequestPageNo++;
         }
-    }
-
-    public static int calculateNoOfColumns(Context context) {
-        //
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int scalingFactor = 160;
-        // Calculate no. of columns based on scalling factor
-        int noOfColumns = (int) (dpWidth / scalingFactor);
-        // Return the no. of columns
-        return noOfColumns;
     }
 
     // Update the empty view

@@ -17,10 +17,15 @@
 
 package com.rowland.moviesquire.ui.activities;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.View;
 
 import com.facebook.stetho.Stetho;
 import com.rowland.moviesquire.R;
@@ -65,6 +70,38 @@ public class BaseToolBarActivity extends AppCompatActivity {
             // Should we set logo to appear in inc_toolbar?
             getSupportActionBar().setIcon(iconResource);
             //this.mToolbar.setLogo(R.drawable.ic_logo_48px);
+        }
+    }
+
+    // Calculate the appropriate no. of grid columns
+    public int calculateNoOfColumns(Context context) {
+        //
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        // Have a full screen for one-pane
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        // Have a fraction of screen for two-pane
+        if (mIsTwoPane) {
+            dpWidth = displayMetrics.widthPixels * 1 / 2f / displayMetrics.density;
+        }
+        // Adjust no.of columns using this factor
+        int scalingFactor = 140;
+        // Calculate no. of columns based on scalling factor
+        int noOfColumns = (int) (dpWidth / scalingFactor);
+        // Return the no. of columns
+        return noOfColumns;
+    }
+
+    public void setToolbarTransparent(boolean isToolbarTransparent) {
+        if (isToolbarTransparent) {
+            // Check for minimum api as Lollipop
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Set up  the systemUi flags
+                getWindow().getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                // Set the status bar tobe transparent
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+            }
         }
     }
 

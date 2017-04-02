@@ -92,26 +92,14 @@ public class PopularFragment extends BaseMovieFragment implements LoaderManager.
             startMovieIntentService();
             isLaunch = false;
         }
-        //
-        LoaderManager manager = getActivity().getSupportLoaderManager();
-        if (manager.getLoader(POP_MOVIES_LOADER_ID) == null) {
-            // Initialize the Loader
-            manager.initLoader(POP_MOVIES_LOADER_ID, null, this);
-        } else {
-            // Restart the Loader
-            manager.restartLoader(POP_MOVIES_LOADER_ID, null, this);
-        }
+        // Initialize the Loader
+        getActivity().getSupportLoaderManager().initLoader(POP_MOVIES_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
         // Create new loader
-        //MovieLoader movieLoader = new MovieLoader(getActivity(), mSortOrder);
-        // Return new loader
-        //return movieLoader;
-
-        // Create new loader
-        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class), true);
+        ModelLoader movieLoader = new ModelLoader<>(getActivity(), Movie.class, new Select().from(Movie.class).where("isPopular = ?", true), true);
         // Return new loader
         return movieLoader;
     }
@@ -124,7 +112,6 @@ public class PopularFragment extends BaseMovieFragment implements LoaderManager.
         mMovieList = movieList;
         // Pass it on to our adapter
         mMovieAdapter.addAll(movieList);
-        Log.d(LOG_TAG, mMovieList.toString());
         // Update the Empty View
         updateEmptyView();
     }

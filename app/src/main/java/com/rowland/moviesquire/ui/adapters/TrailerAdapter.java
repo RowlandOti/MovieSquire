@@ -58,7 +58,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.CustomVi
         // The list of trailers
         this.mTrailerList = trailerList;
         // Acquire the containing activity
-        this.mActivity =  activity;
+        this.mActivity = activity;
     }
 
     // Called when RecyclerView needs a new CustomViewHolder of the given type to represent an item.
@@ -105,7 +105,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.CustomVi
             // Assign
             mTrailerList = trailerList;
         }
-
+        // Notify of changes
+        notifyDataSetChanged();
     }
 
     // Takes care of the overhead of recycling and gives better performance and scrolling

@@ -93,7 +93,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
             // Assign
             mReviewList = reviewList;
         }
-
+        // Notify of changes
+        notifyDataSetChanged();
     }
 
     // Takes care of the overhead of recycling and gives better performance and scrolling

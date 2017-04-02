@@ -26,6 +26,7 @@ import android.support.design.widget.SlidingTabStripLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import android.widget.AdapterView;
 
 import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.objects.ListPopupMenu;
+import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.ui.activities.MainActivity;
 import com.rowland.moviesquire.ui.adapters.ListPopupWindowAdapter;
 import com.rowland.moviesquire.ui.adapters.SmartNestedViewPagerAdapter;
@@ -118,6 +120,7 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
+
     // Save data for this fragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -136,7 +139,7 @@ public class MainFragment extends Fragment {
         ((MainActivity) getActivity()).setToolbar(mToolbar, false, false, R.drawable.ic_logo_48px);
     }
 
-    // Called after fragmnet's view is created by onCreateView()
+    // Called after fragment's view is created by onCreateView()
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Initialize the fragments adapter

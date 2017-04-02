@@ -22,6 +22,9 @@ package com.rowland.moviesquire.rest.models;
  * Created by Rowland on 12/11/2015.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -33,7 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 @Table(name = "movies")
-public class Movie extends Model implements Serializable {
+public class Movie extends Model implements Parcelable {
 
     // The class Log identifier
     private static final String LOG_TAG = Movie.class.getSimpleName();
@@ -126,6 +129,27 @@ public class Movie extends Model implements Serializable {
         // You have to call super in each constructor to create the table.
         super();
     }
+
+    protected Movie(Parcel in) {
+        posterPath = in.readString();
+        overview = in.readString();
+        originalTitle = in.readString();
+        originalLanguage = in.readString();
+        title = in.readString();
+        backdropPath = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     // Retrieve all the movie owned trailers
     public List<Trailer> getMovieTrailers() {
@@ -347,4 +371,18 @@ public class Movie extends Model implements Serializable {
         this.adult = adult;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(posterPath);
+        parcel.writeString(overview);
+        parcel.writeString(originalTitle);
+        parcel.writeString(originalLanguage);
+        parcel.writeString(title);
+        parcel.writeString(backdropPath);
+    }
 }
