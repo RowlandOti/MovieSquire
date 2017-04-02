@@ -242,9 +242,9 @@ public class DetailFragment extends Fragment {
                     // Set ProgressBar refresh on
                     mReviewProgressBar.setVisibility(View.VISIBLE);
                     // Create new loader
-                    ReviewLoader movieLoader = new ReviewLoader(getActivity(), mMovie);
+                    ModelLoader reviewLoader = new ModelLoader<>(getActivity(), Review.class, new Select().from(Review.class).where("movie = ?", mMovie.getId()), true);
                     // Return new loader
-                    return movieLoader;
+                    return reviewLoader;
                 }
 
                 @Override
@@ -292,9 +292,9 @@ public class DetailFragment extends Fragment {
                     // Set ProgressBar refresh on
                     mTrailerProgressBar.setVisibility(View.VISIBLE);
                     // Create new loader
-                    TrailerLoader movieLoader = new TrailerLoader(getActivity(), (Movie) mMovie);
+                    ModelLoader trailerLoader = new ModelLoader<>(getActivity(), Trailer.class, new Select().from(Trailer.class).where("movie = ?", mMovie.getId()), true);
                     // Return new loader
-                    return movieLoader;
+                    return trailerLoader;
                 }
 
                 @Override
