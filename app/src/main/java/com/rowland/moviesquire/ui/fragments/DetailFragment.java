@@ -422,8 +422,9 @@ public class DetailFragment extends Fragment {
                 mBackdropMovie.setImageBitmap(bitmap);
                 final Palette.PaletteAsyncListener paletteListener = new Palette.PaletteAsyncListener() {
                     public void onGenerated(Palette palette) {
-                        // access palette colors here
-                        int defaultColor = 0xEF5350;
+                        //Default color
+                        final int defaultColor = 0xEF5350;
+                        // Access palette colors here
                         int mutedDarkColor = palette.getDarkMutedColor(defaultColor);
                         mDetailMovieTitleContainer.setBackgroundColor(mutedDarkColor);
                         // Get the "vibrant" color swatch based on the bitmap
