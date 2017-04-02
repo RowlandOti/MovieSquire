@@ -20,7 +20,6 @@ package com.rowland.moviesquire.ui.activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -52,14 +51,14 @@ public class DetailActivity extends BaseToolBarActivity {
     // Currently selected id
     private Long mSelectedMovieId;
     // Sent movie id
-    private long mSentMovieId;
+    private int mSelectedMoviePosition;
     // Movie sort criterion
     private String mSortCriteria;
     // Details PagerAdapter
     DetailPagerAdapter mDetailsPagerAdapter;
 
     @Bind(R.id.detail_viewPager)
-    ViewPager mDetailViewPager;
+    ViewPager mDetailsViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +69,8 @@ public class DetailActivity extends BaseToolBarActivity {
         ButterKnife.bind(this);
 
         mDetailsPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager());
-        mDetailViewPager.setAdapter(mDetailsPagerAdapter);
-        mDetailViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mDetailsViewPager.setAdapter(mDetailsPagerAdapter);
+        mDetailsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -91,8 +90,9 @@ public class DetailActivity extends BaseToolBarActivity {
         });
 
         // Acquire the movie id sent to this activity
-        mSentMovieId = getIntent().getLongExtra(DetailFragment.MOVIE_KEY, 0);
-        mSelectedMovieId = mSentMovieId;
+        mSelectedMovieId = getIntent().getLongExtra(DetailFragment.MOVIE_KEY, 0);
+        // Acquire the selected movie position
+        mSelectedMoviePosition = getIntent().getIntExtra(DetailFragment.MOVIE_POSITION_KEY, 0);
         // Acquire sort type
         mSortCriteria = getIntent().getStringExtra(DetailFragment.MOVIE_SORT_KEY);
 
@@ -100,7 +100,7 @@ public class DetailActivity extends BaseToolBarActivity {
         mMoviesLoaderCallBack = new LoaderManager.LoaderCallbacks<List<Movie>>() {
             @Override
             public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
-                if(mSortCriteria == null) {
+                if (mSortCriteria == null) {
                     mSortCriteria = "isPopular";
                 }
                 StringBuilder whereClause = new StringBuilder();
@@ -120,6 +120,8 @@ public class DetailActivity extends BaseToolBarActivity {
                 mMovieList = data;
                 // Notify PagerAdapter
                 mDetailsPagerAdapter.notifyDataSetChanged();
+                // Navigate to movie item that was sent from MainActivity
+                mDetailsViewPager.setCurrentItem(mSelectedMoviePosition, true);
             }
 
             @Override
@@ -141,6 +143,8 @@ public class DetailActivity extends BaseToolBarActivity {
 
         @Override
         public Fragment getItem(int position) {
+            // Update the selected movie id
+            mSelectedMovieId = mMovieList.get(position).getId_();
             // Create a Bundle object
             Bundle args = new Bundle();
             // Set arguments on Bundle
@@ -158,10 +162,6 @@ public class DetailActivity extends BaseToolBarActivity {
 
         // Insert the DetailFragment
         private Fragment createDetailFragment(Bundle args) {
-            // Acquire the Fragment manger
-            FragmentManager fm = getSupportFragmentManager();
-            // Begin the transaction
-            FragmentTransaction ft = fm.beginTransaction();
             // Create new fragment
             DetailFragment detailFragment = DetailFragment.newInstance(args);
 

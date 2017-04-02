@@ -163,6 +163,8 @@ public class MainActivity extends BaseToolBarActivity implements MainFragment.IM
             Intent intent = new Intent(this, DetailActivity.class);
             // Set extras - pass MOVIE_KEY
             intent.putExtra(DetailFragment.MOVIE_KEY, movieId);
+            // Set extras - pass MOVIE_KEY
+            intent.putExtra(DetailFragment.MOVIE_POSITION_KEY, selectedPosition);
             // Start the DetailActivity
             startActivity(intent);
         }

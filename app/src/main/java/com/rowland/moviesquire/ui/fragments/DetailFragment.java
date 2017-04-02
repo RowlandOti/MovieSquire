@@ -91,6 +91,8 @@ public class DetailFragment extends Fragment {
     public static final String MOVIE_KEY = "movie_key";
     // The Movie sort type identifer
     public static final String MOVIE_SORT_KEY = "movie_sort_key";
+    // The movie position key
+    public static final String MOVIE_POSITION_KEY = "movie_position_key";
     // Logging Identifier for class
     private final String LOG_TAG = DetailFragment.class.getSimpleName();
     // Reviews loader id
