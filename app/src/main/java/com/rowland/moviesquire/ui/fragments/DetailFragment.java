@@ -274,7 +274,7 @@ public class DetailFragment extends Fragment {
             };
 
             // Initialize layout manager
-            final LinearLayoutManager mHorizontalLinearLayoutManger = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            final WrappingLinearLayoutManager mHorizontalLinearLayoutManger = new WrappingLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             // Set the RecycleView's layout manager
             mTrailerRecycleView.setLayoutManager(mHorizontalLinearLayoutManger);
             // Set the RecycleView's size fixing
@@ -353,6 +353,14 @@ public class DetailFragment extends Fragment {
             // Animate the Floating action button
             mFavoriteFab.startAnimation(simpleGrowAnimation);
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        LoaderManager manager = getActivity().getSupportLoaderManager();
+
+        manager.restartLoader(REVIEWS_LOADER_ID, null, mReviewLoaderCallBack);
+        manager.restartLoader(TRAILERS_LOADER_ID, null, mTrailerLoaderCallBack);
     }
 
     // Called to create menu item

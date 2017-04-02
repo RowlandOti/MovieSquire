@@ -70,24 +70,6 @@ public class DetailActivity extends BaseToolBarActivity {
 
         mDetailsPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager());
         mDetailsViewPager.setAdapter(mDetailsPagerAdapter);
-        mDetailsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (mMovieList != null) {
-                    mSelectedMovieId = mMovieList.get(position).getId_();
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         // Acquire the movie id sent to this activity
         mSelectedMovieId = getIntent().getLongExtra(DetailFragment.MOVIE_KEY, 0);
