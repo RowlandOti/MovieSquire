@@ -87,8 +87,9 @@ public class MainActivity extends BaseToolBarActivity implements MainFragment.IM
         } else {
             toggleShowTwoPane(false);
         }
-
-        showMainFragment(null);
+        if(savedInstanceState == null) {
+            showMainFragment(null);
+        }
     }
 
     // Insert the DetailFragment
