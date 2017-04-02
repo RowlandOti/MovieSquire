@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import com.activeandroid.query.Select;
 import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.data.loaders.ModelLoader;
-import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
 

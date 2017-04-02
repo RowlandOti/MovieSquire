@@ -22,22 +22,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rowland.moviesquire.R;
-import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.ui.fragments.DetailFragment;
 import com.rowland.moviesquire.ui.fragments.MainFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 

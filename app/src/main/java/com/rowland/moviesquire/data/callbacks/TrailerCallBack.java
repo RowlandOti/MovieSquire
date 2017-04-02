@@ -18,12 +18,9 @@
 package com.rowland.moviesquire.data.callbacks;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.rowland.moviesquire.BuildConfig;
-import com.rowland.moviesquire.data.loaders.TrailerLoader;
 import com.rowland.moviesquire.data.repository.TrailerRepository;
 import com.rowland.moviesquire.rest.collections.TrailerCollection;
 
@@ -56,8 +53,6 @@ public class TrailerCallBack implements Callback<TrailerCollection> {
             TrailerRepository mTrailerRepository = new TrailerRepository();
             // Save movies to data storage
             mTrailerRepository.saveAll(trailerCollection);
-            // BroadCast the changes locally
-            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(TrailerLoader.INTENT_ACTION));
         } else {
             // Check whether we are in debugging mode
             if (BuildConfig.IS_DEBUG_MODE) {

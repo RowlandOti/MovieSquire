@@ -20,7 +20,6 @@ package com.rowland.moviesquire.ui.fragments.subfragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import android.view.ViewGroup;
 import com.activeandroid.query.Select;
 import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.data.loaders.ModelLoader;
-import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
 

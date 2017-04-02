@@ -18,12 +18,9 @@
 package com.rowland.moviesquire.data.callbacks;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.rowland.moviesquire.BuildConfig;
-import com.rowland.moviesquire.data.loaders.MovieLoader;
 import com.rowland.moviesquire.data.repository.MovieRepository;
 import com.rowland.moviesquire.rest.collections.MovieCollection;
 import com.rowland.moviesquire.rest.enums.ESortOrder;
@@ -67,7 +64,7 @@ public class MovieCallBack implements Callback<MovieCollection> {
             mMovieRepository.saveAll(reviewCollection, mSortOrder);
 
             // BroadCast the changes locally
-            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(MovieLoader.INTENT_ACTION));
+            //LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(MovieLoader.INTENT_ACTION));
         } else {
             // Check whether we are in debugging mode;
             if (BuildConfig.IS_DEBUG_MODE) {

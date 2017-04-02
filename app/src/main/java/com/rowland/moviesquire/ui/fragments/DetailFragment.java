@@ -17,12 +17,9 @@
 
 package com.rowland.moviesquire.ui.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -53,8 +50,6 @@ import com.activeandroid.query.Select;
 import com.rowland.moviesquire.BuildConfig;
 import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.data.loaders.ModelLoader;
-import com.rowland.moviesquire.data.loaders.ReviewLoader;
-import com.rowland.moviesquire.data.loaders.TrailerLoader;
 import com.rowland.moviesquire.data.repository.MovieRepository;
 import com.rowland.moviesquire.rest.enums.EBaseImageSize;
 import com.rowland.moviesquire.rest.enums.EBaseURlTypes;
@@ -69,7 +64,6 @@ import com.rowland.moviesquire.ui.adapters.ReviewAdapter;
 import com.rowland.moviesquire.ui.adapters.TrailerAdapter;
 import com.rowland.moviesquire.ui.widgets.WrappingLinearLayoutManager;
 import com.rowland.moviesquire.utilities.Utilities;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

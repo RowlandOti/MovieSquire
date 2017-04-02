@@ -20,13 +20,6 @@ package com.rowland.moviesquire.data.broadcastrecievers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.util.Log;
-
-import com.rowland.moviesquire.BuildConfig;
-import com.rowland.moviesquire.data.loaders.BaseLoader;
-import com.rowland.moviesquire.utilities.Utilities;
 
 /**
  * Created by Oti Rowland on 12/21/2015.
@@ -36,32 +29,9 @@ import com.rowland.moviesquire.utilities.Utilities;
  */
 public class NetworkChangeBroadCastReceiver extends BroadcastReceiver {
 
-    // The class Log identifier
-    private static final String LOG_TAG = NetworkChangeBroadCastReceiver.class.getSimpleName();
-    // The loader that owns this listener
-    private BaseLoader mLoader;
 
-    public NetworkChangeBroadCastReceiver(BaseLoader loader) {
-        // Assign loader to this listener
-        this.mLoader = loader;
-        // Create an IntentFilter
-        IntentFilter intentFilter = new IntentFilter();
-        // Declare the type of Action for the IntentFilter
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        // Register reciever to listen for above IntentFilter
-        mLoader.getContext().registerReceiver(this, intentFilter);
-    }
-
-    // Inform if contents of database is changed
     @Override
     public void onReceive(Context context, Intent intent) {
-        // network status
-        boolean isOnline = Utilities.NetworkUtility.isNetworkAvailable(context);
-        // Set network status of loader
-        mLoader.setIsOnline(isOnline);
-        // Check wether we are in debug mode
-        if (BuildConfig.IS_DEBUG_MODE) {
-            Log.d(LOG_TAG, "Connection broadcast fired from " + mLoader.getClass().getSimpleName() + " " + mLoader.getIsOnline());
-        }
+
     }
 }

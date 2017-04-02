@@ -26,10 +26,8 @@ import android.support.design.widget.SlidingTabStripLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,7 +38,6 @@ import android.widget.AdapterView;
 
 import com.rowland.moviesquire.R;
 import com.rowland.moviesquire.objects.ListPopupMenu;
-import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.ui.activities.MainActivity;
 import com.rowland.moviesquire.ui.adapters.ListPopupWindowAdapter;
 import com.rowland.moviesquire.ui.adapters.SmartNestedViewPagerAdapter;

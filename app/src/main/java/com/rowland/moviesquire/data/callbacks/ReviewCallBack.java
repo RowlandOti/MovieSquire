@@ -18,12 +18,9 @@
 package com.rowland.moviesquire.data.callbacks;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.rowland.moviesquire.BuildConfig;
-import com.rowland.moviesquire.data.loaders.ReviewLoader;
 import com.rowland.moviesquire.data.repository.ReviewRepository;
 import com.rowland.moviesquire.rest.collections.ReviewCollection;
 
@@ -56,8 +53,6 @@ public class ReviewCallBack implements Callback<ReviewCollection> {
             ReviewRepository mReviewRepository = new ReviewRepository();
             // Save movies to data storage
             mReviewRepository.saveAll(reviewCollection);
-            // BroadCast the changes locally
-            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(ReviewLoader.INTENT_ACTION));
         } else {
             // Check whether we are in debugging mode
             if (BuildConfig.IS_DEBUG_MODE) {

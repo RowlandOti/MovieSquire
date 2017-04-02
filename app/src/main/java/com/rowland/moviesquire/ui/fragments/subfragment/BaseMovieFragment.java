@@ -17,7 +17,6 @@
 
 package com.rowland.moviesquire.ui.fragments.subfragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,10 +24,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -38,17 +35,13 @@ import com.rowland.moviesquire.rest.enums.ESortOrder;
 import com.rowland.moviesquire.rest.models.Movie;
 import com.rowland.moviesquire.rest.services.MovieIntentService;
 import com.rowland.moviesquire.ui.activities.BaseToolBarActivity;
-import com.rowland.moviesquire.ui.activities.DetailActivity;
-import com.rowland.moviesquire.ui.activities.MainActivity;
 import com.rowland.moviesquire.ui.adapters.MovieAdapter;
 import com.rowland.moviesquire.ui.widgets.EndlessRecyclerViewScrollListener;
-import com.rowland.moviesquire.utilities.ScreenUtility;
 import com.rowland.moviesquire.utilities.Utilities;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Oti Rowland on 12/18/2015.
