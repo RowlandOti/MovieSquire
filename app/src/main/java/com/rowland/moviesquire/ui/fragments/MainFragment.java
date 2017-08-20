@@ -45,7 +45,7 @@ import com.rowland.moviesquire.ui.adapters.SmartNestedViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -60,11 +60,11 @@ public class MainFragment extends Fragment {
     private final String LOG_TAG = MainFragment.class.getSimpleName();
     // ButterKnife injected views
     @Nullable
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.slidingTabStrips)
+    @BindView(R.id.slidingTabStrips)
     SlidingTabStripLayout mSlidingTabStrips;
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager mViewPager;
     // The Subfragment titles
     private String[] TITLES = {"Popular", "Highest Rated", "Favourite"};

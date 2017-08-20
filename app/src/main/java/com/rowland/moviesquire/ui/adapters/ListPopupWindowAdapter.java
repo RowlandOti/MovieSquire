@@ -31,7 +31,7 @@ import com.rowland.moviesquire.objects.ListPopupMenu;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -107,9 +107,9 @@ public class ListPopupWindowAdapter extends BaseAdapter {
 
     static class ViewHolder {
         // The icon
-        @Bind(R.id.icon_image_view)
+        @BindView(R.id.icon_image_view)
         ImageView icon;
-        @Bind(R.id.name_text_view)
+        @BindView(R.id.name_text_view)
         TextView name;
 
         public ViewHolder(View itemView) {

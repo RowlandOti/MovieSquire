@@ -1,8 +1,13 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def iMdbApiKey = properties.getProperty('IMDB_API_KEY')
 
     defaultConfig {
         applicationId project.APPLICATION_ID
@@ -25,6 +30,7 @@ android {
             }
         }
     }
+    flavorDimensions "default"
     productFlavors {
         //Paid Version
         pro {
@@ -32,8 +38,10 @@ android {
             versionName project.VERSION_NAME + "-pro"
             //Accessed in java code as BuildConfig.IS_PRO_VERSION
             buildConfigField "boolean", "IS_PRO_VERSION", "true"
-            buildConfigField 'String', 'IMDB_API_KEY', '"e98b412771ccf982c7a7fa8063878926"'
+
+            buildConfigField 'String', 'IMDB_API_KEY', iMdbApiKey
             productFlavors.pro.signingConfig signingConfigs.release
+            dimension "default"
 
         }
         //Free Version
@@ -42,8 +50,9 @@ android {
             versionName project.VERSION_NAME + "-free"
             //Accessed in java code as BuildConfig.IS_PRO_VERSION
             buildConfigField "boolean", "IS_PRO_VERSION", "false"
-            buildConfigField 'String', 'IMDB_API_KEY', '"e98b412771ccf982c7a7fa8063878926"'
+            buildConfigField 'String', 'IMDB_API_KEY', iMdbApiKey
             productFlavors.free.signingConfig signingConfigs.release
+            dimension "default"
 
         }
     }
@@ -52,6 +61,7 @@ android {
             applicationIdSuffix ".debug"
             // Show the logs when debugging
             buildConfigField "Boolean", "IS_DEBUG_MODE", "true"
+            buildConfigField 'String', 'IMDB_API_KEY', project.IMDB_API_KEY
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -69,11 +79,11 @@ dependencies {
     // MODULE DEPENDENCY
     //compile project(':libraries:design')
     // REMOTE BINARY DEPENDENCY - Android
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:cardview-v7:25.1.1'
+    compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.android.support:palette-v7:25.1.1'
     // REMOTE BINARY DEPENDENCY - Third Party
     // Use - Rest API support
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
@@ -90,9 +100,10 @@ dependencies {
     // Use - Database support
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     // Use - View Injection support
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     // Use - RecycleView Animation support
     compile 'jp.wasabeef:recyclerview-animators:1.3.0'
     // Use - SlidingTabstripLayout for Tabs
-    compile 'com.rowland.slidingtabstriplayout:slidingTabStripLayout:1.0.0-beta-1'
+    compile 'com.rowland.slidingtabstriplayout:slidingTabStripLayout:1.0.0-beta-3'
 }

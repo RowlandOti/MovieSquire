@@ -30,7 +30,7 @@
         android:clickable="true"
         android:fitsSystemWindows="true"
         app:contentScrim="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        app:layout_scrollFlags="scroll|snap">
 
         <ImageView
             android:id="@+id/movie_detail_backdrop_image_view"
@@ -47,7 +47,6 @@
             android:layout_gravity="left|bottom"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="30dp"
-
             android:layout_marginStart="30dp"
             android:fitsSystemWindows="true"
             android:transitionName="posterImageView"

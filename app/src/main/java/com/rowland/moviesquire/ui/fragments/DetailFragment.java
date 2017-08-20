@@ -62,7 +62,6 @@ import com.rowland.moviesquire.ui.activities.BaseToolBarActivity;
 import com.rowland.moviesquire.ui.activities.DetailActivity;
 import com.rowland.moviesquire.ui.adapters.ReviewAdapter;
 import com.rowland.moviesquire.ui.adapters.TrailerAdapter;
-import com.rowland.moviesquire.ui.widgets.WrappingLinearLayoutManager;
 import com.rowland.moviesquire.utilities.Utilities;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -72,7 +71,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -97,39 +96,41 @@ public class DetailFragment extends Fragment {
     boolean isFavourite;
     // ButterKnife injected views
     @Nullable
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.movie_detail_backdrop_image_view)
+    @BindView(R.id.movie_detail_backdrop_image_view)
     ImageView mBackdropMovie;
-    @Bind(R.id.movie_detail_backdrop_play_image_view)
+    @BindView(R.id.movie_detail_backdrop_play_image_view)
     ImageView mBackdropMoviePlay;
-    @Bind(R.id.movie_statistic_favourite_text_view)
+    @BindView(R.id.movie_detail_poster_image_view)
+    ImageView mMoviePoster;
+    @BindView(R.id.movie_statistic_favourite_text_view)
     TextView mDetailFavouriteTextView;
-    @Bind(R.id.movie_title_text_view)
+    @BindView(R.id.movie_title_text_view)
     TextView mDetailMovieTitle;
-    @Bind(R.id.movie_title_container)
+    @BindView(R.id.movie_title_container)
     RelativeLayout mDetailMovieTitleContainer;
-    @Bind(R.id.movie_statistic_year_text_view)
+    @BindView(R.id.movie_statistic_year_text_view)
     TextView mDetailMovieYear;
-    @Bind(R.id.movie_statistic_rate_text_view)
+    @BindView(R.id.movie_statistic_rate_text_view)
     TextView mDetailMovieRate;
-    @Bind(R.id.movie_statistic_popular_text_view)
+    @BindView(R.id.movie_statistic_popular_text_view)
     TextView mDetailMoviePopularity;
-    @Bind(R.id.movie_overview_text_view)
+    @BindView(R.id.movie_overview_text_view)
     TextView mDetailMovieOverview;
-    @Bind(R.id.favorite_fab)
+    @BindView(R.id.favorite_fab)
     FloatingActionButton mFavoriteFab;
-    @Bind(R.id.trailer_empty_text_view)
+    @BindView(R.id.trailer_empty_text_view)
     TextView mDetailMovieEmptyTrailers;
-    @Bind(R.id.review_empty_text_view)
+    @BindView(R.id.review_empty_text_view)
     TextView mDetailMovieEmptyReviews;
-    @Bind(R.id.trailer_progress_bar)
+    @BindView(R.id.trailer_progress_bar)
     ProgressBar mTrailerProgressBar;
-    @Bind(R.id.review_progress_bar)
+    @BindView(R.id.review_progress_bar)
     ProgressBar mReviewProgressBar;
-    @Bind(R.id.trailer_recycle_view)
+    @BindView(R.id.trailer_recycle_view)
     RecyclerView mTrailerRecycleView;
-    @Bind(R.id.review_recycle_view)
+    @BindView(R.id.review_recycle_view)
     RecyclerView mReviewRecycleView;
 
     // The Movie model
@@ -218,7 +219,7 @@ public class DetailFragment extends Fragment {
         // Check for null
         if (mMovie != null) {
             // Initialize layout manager
-            final WrappingLinearLayoutManager mVerticalLinearLayoutManger = new WrappingLinearLayoutManager(getContext());
+            final LinearLayoutManager mVerticalLinearLayoutManger = new LinearLayoutManager(getContext());
             // Set the RecycleView's layout manager
             mReviewRecycleView.setLayoutManager(mVerticalLinearLayoutManger);
             // Set the RecycleView's size fixing
@@ -268,7 +269,7 @@ public class DetailFragment extends Fragment {
             };
 
             // Initialize layout manager
-            final WrappingLinearLayoutManager mHorizontalLinearLayoutManger = new WrappingLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            final LinearLayoutManager mHorizontalLinearLayoutManger = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             // Set the RecycleView's layout manager
             mTrailerRecycleView.setLayoutManager(mHorizontalLinearLayoutManger);
             // Set the RecycleView's size fixing
@@ -407,7 +408,9 @@ public class DetailFragment extends Fragment {
     // Bind data to the views
     private void bindTo() {
         // Build the image url
-        String imageUrl = EBaseURlTypes.MOVIE_API_IMAGE_BASE_URL.getUrlType() + EBaseImageSize.IMAGE_SIZE_W500.getImageSize() + mMovie.getBackdropPath();
+        String imageBackdropUrl = EBaseURlTypes.MOVIE_API_IMAGE_BASE_URL.getUrlType() + EBaseImageSize.IMAGE_SIZE_W500.getImageSize() + mMovie.getBackdropPath();
+        String imagePosterUrl = EBaseURlTypes.MOVIE_API_IMAGE_BASE_URL.getUrlType() + EBaseImageSize.IMAGE_SIZE_W154.getImageSize() + mMovie.getPosterPath();
+
 
         Target target = new Target() {
 
@@ -459,10 +462,16 @@ public class DetailFragment extends Fragment {
         };
         // Use Picasso to load the images
         Picasso.with(mBackdropMovie.getContext())
-                .load(imageUrl)
+                .load(imageBackdropUrl)
                 .networkPolicy(Utilities.NetworkUtility.isNetworkAvailable(mBackdropMovie.getContext()) ? NetworkPolicy.NO_CACHE : NetworkPolicy.OFFLINE)
                 .placeholder(R.drawable.ic_movie_placeholder)
                 .into(target);
+
+        Picasso.with(mMoviePoster.getContext())
+                .load(imagePosterUrl)
+                .networkPolicy(Utilities.NetworkUtility.isNetworkAvailable(mBackdropMovie.getContext()) ? NetworkPolicy.NO_CACHE : NetworkPolicy.OFFLINE)
+                .placeholder(R.drawable.ic_movie_placeholder)
+                .into(mMoviePoster);
 
         // Set the title
         mDetailMovieTitle.setText(mMovie.getOriginalTitle());

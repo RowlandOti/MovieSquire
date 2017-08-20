@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -112,7 +112,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.CustomVi
     // Takes care of the overhead of recycling and gives better performance and scrolling
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.trailer_thumbnail_image_view)
+        @BindView(R.id.trailer_thumbnail_image_view)
         ImageView mTrailerThumbnailImageView;
 
 

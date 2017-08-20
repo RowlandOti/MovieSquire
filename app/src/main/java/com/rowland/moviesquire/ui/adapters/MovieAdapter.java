@@ -48,7 +48,7 @@ import com.squareup.picasso.Target;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -136,22 +136,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CustomViewHo
     // Takes care of the overhead of recycling and gives better performance and scrolling
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.grid_release_date_text_view)
+        @BindView(R.id.grid_release_date_text_view)
         TextView mMovieReleaseDateTextView;
 
-        @Bind(R.id.grid_rating)
+        @BindView(R.id.grid_rating)
         TextView mMovieRating;
 
-        @Bind(R.id.poster_image_view)
+        @BindView(R.id.poster_image_view)
         ImageView mMovieImageView;
 
-        @Bind(R.id.grid_type_image_view)
+        @BindView(R.id.grid_type_image_view)
         ImageView mSortTypeIconImageView;
 
-        @Bind(R.id.container_item)
+        @BindView(R.id.container_item)
         FrameLayout mGridItemContainer;
 
-        @Bind(R.id.grid_container_content)
+        @BindView(R.id.grid_container_content)
         LinearLayout mGridContainerContent;
 
         public CustomViewHolder(View itemView) {

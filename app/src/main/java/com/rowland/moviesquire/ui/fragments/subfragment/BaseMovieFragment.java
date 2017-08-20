@@ -41,7 +41,8 @@ import com.rowland.moviesquire.utilities.Utilities;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Created by Oti Rowland on 12/18/2015.
@@ -64,11 +65,11 @@ public class BaseMovieFragment extends Fragment implements SwipeRefreshLayout.On
     private EndlessRecyclerViewScrollListener scrollListener;
 
     // ButterKnife injected Views
-    @Bind(R.id.sw_refresh_layout)
+    @BindView(R.id.sw_refresh_layout)
     protected SwipeRefreshLayout mSwRefreshLayout;
-    @Bind(R.id.movie_recycle_view)
+    @BindView(R.id.movie_recycle_view)
     protected RecyclerView mMovieRecycleView;
-    @Bind(R.id.empty_text_view_container)
+    @BindView(R.id.empty_text_view_container)
     protected LinearLayout mEmptyTextViewContainer;
 
 

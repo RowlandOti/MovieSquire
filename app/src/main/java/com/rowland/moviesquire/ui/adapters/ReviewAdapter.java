@@ -31,7 +31,7 @@ import com.rowland.moviesquire.rest.models.Review;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -100,10 +100,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.CustomView
     // Takes care of the overhead of recycling and gives better performance and scrolling
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.review_author_text_view)
+        @BindView(R.id.review_author_text_view)
         TextView mReviewAuthorTextView;
 
-        @Bind(R.id.review_content_text_view)
+        @BindView(R.id.review_content_text_view)
         TextView mReviewContentTextView;
 
 

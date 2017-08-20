@@ -30,7 +30,8 @@ import android.view.View;
 import com.facebook.stetho.Stetho;
 import com.rowland.moviesquire.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * Created by Oti Rowland on 12/20/2015.
@@ -42,8 +43,7 @@ public class BaseToolBarActivity extends AppCompatActivity {
     // ButterKnife injected Views
     // The inc_toolbar
     @Nullable
-    @Bind(R.id.toolbar)
-    protected Toolbar mToolbar;
+    @BindView(R.id.toolbar) protected Toolbar mToolbar;
 
     // Should we show master-detail layout?
     protected boolean mIsTwoPane;

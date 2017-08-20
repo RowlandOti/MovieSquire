@@ -34,7 +34,7 @@ import com.rowland.moviesquire.ui.fragments.DetailFragment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseToolBarActivity {
@@ -57,8 +57,7 @@ public class DetailActivity extends BaseToolBarActivity {
     // Details PagerAdapter
     DetailPagerAdapter mDetailsPagerAdapter;
 
-    @Bind(R.id.detail_viewPager)
-    ViewPager mDetailsViewPager;
+    @BindView(R.id.detail_viewPager) ViewPager mDetailsViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

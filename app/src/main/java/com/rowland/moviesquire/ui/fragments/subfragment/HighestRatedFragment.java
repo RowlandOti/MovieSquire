@@ -56,7 +56,6 @@ public class HighestRatedFragment extends BaseMovieFragment implements LoaderMan
         HighestRatedFragment fragmentInstance = (HighestRatedFragment) newInstance(new HighestRatedFragment(), args);
         // Return the new fragment
         return fragmentInstance;
-
     }
 
     @Override
